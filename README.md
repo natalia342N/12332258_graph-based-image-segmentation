@@ -49,6 +49,8 @@ Each sample consists of an RGB image and a corresponding segmentation mask of eq
 
 **Total estimated:** ≈ allocate minimum 80 hours within the next 7 weeks ≈ 5 hours 2 times per week
 
+Allocated in week 0, week 1 and week 2: Initiate ≈ already completed 15 hours 
+
 
 ### Project Inspiration 
 
