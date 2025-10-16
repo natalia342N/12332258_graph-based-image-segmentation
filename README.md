@@ -29,8 +29,31 @@ The CNN and GNN based method will be examined as a baseline model while the prop
 
 ## Dataset 
 
-..
+Among popular image segmentation datasets, the Oxford-IIIT Pet Dataset was selected for this project. It provides annotated images of cats and dogs from 37 different breeds. The dataset contains 7349 images, divided into training/validation and test splits.
+
+The dataset was loaded using torchvision.datasets.OxfordIIITPet, which automatically downloads both images and their corresponding segmentation masks. In the accompanying Jupyter notebook, an initial dataset inspection and visualization was performed (without training) to verify that the dataset size, accessibility, and memory requirements do not pose any issues for this project.
+
+Each sample consists of an RGB image and a corresponding segmentation mask of equal spatial dimensions, containing three pixel classes: background, foreground (the animal), and boundary, along with their respective pixel counts.
 
 ## Project Timeline 
 
-..
+| Task | Description | Estimated Time |
+| ----- | ------------ | --------------- |
+| Dataset selection and preparation | Download the Oxford-IIIT Pet dataset, inspect samples and segmentation masks, verify accessibility and memory usage. | 8 hours |
+| Literature Review | Review papers on CNN–GNN hybrid segmentation models and define the model architecture (baseline U-Net and graph module). Verify GitHub repositories for implementation details. Try to reproduce key results (if possible on related datasets) | 16 hours |
+| Model implementation | Implement the network in PyTorch with all the functionality. Adapt it for Oxford-IIIT Pet Dataset | 24 hours |
+| Training and fine-tuning | Train and optimize the model, tune hyperparameters. | 16 hours |
+| Application and visualization | Build an application to visualize predictions vs. ground-truth masks and compute evaluation metrics. | 16 hours |
+| Report writing | Write the report. | 24 hours |
+| Presentation preparation | Prepare slides and visuals for the project presentation. | 12 hours |
+
+**Total estimated:** ≈ allocate minimum 80 hours within the next 7 weeks ≈ 5 hours 2 times per week
+
+
+### Project Inspiration 
+
+The motivation for choosing this project did not come from a random glance at the list of topics, but a real-life situation. While driving a modern car equipped with a road sign detection system, I once found myself wondering — how is this actually possible, and what mechanism lies behind it?
+
+At first, I assumed the system might rely on a GPS database that stores information about road signs and updates them on the driver’s display as the car moves. However, such systems can now update speed limits almost instantly after passing a sign — or even slightly before. This raised the question: how does such automation work from the ground?
+
+A brief investigation revealed that modern driver-assistance systems make extensive use of deep learning approaches, particularly image segmentation. This discovery inspired the idea for this project — to explore how deep learning techniques can enable machines to interpret visual scenes with pixel-level accuracy, just like human perception on the road.
