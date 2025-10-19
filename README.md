@@ -42,8 +42,8 @@ Each sample consists of an RGB image and a corresponding segmentation mask of eq
 | Task | Description | Estimated Time |
 | ----- | ------------ | --------------- |
 | Dataset selection and preparation | Download the Oxford-IIIT Pet dataset, inspect samples and segmentation masks, verify accessibility and memory usage. | 8 hours |
-| Literature Review | Review papers on CNN–GNN hybrid segmentation models and define the model architecture (baseline U-Net and graph module). Verify GitHub repositories for implementation details. Try to reproduce key results (if possible on related datasets) | 16 hours |
-| Model implementation | Implement the network in PyTorch with all the functionality. Adapt it for Oxford-IIIT Pet Dataset | 24 hours |
+| Literature Review | Review papers on CNN–GNN hybrid segmentation models and define the model architecture (baseline U-Net and graph module). Verify GitHub repositories for implementation details. Try to reproduce key results (if possible on related datasets). | 16 hours |
+| Model implementation | Implement the network in PyTorch with all the functionality. Adapt it for Oxford-III Pet Dataset. | 24 hours |
 | Training and fine-tuning | Train and optimize the model, tune hyperparameters. | 16 hours |
 | Application and visualization | Build an application to visualize predictions vs. ground-truth masks and compute evaluation metrics. | 16 hours |
 | Report writing | Write the report. | 24 hours |
