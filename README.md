@@ -6,7 +6,7 @@
 
 This repository contains the code and resources for the project Graph-Based Image Segmentation, developed as part of the 194.077 Applied Deep Learning course in the Winter Semester 2025.
 
-Image segmentation has recently been extensively explored in deep learning, particularly through graph-based neural networks. While conventional Convolutional Neural Networks (CNNs) provide a strong baseline, studies show that hybrid CNN–Graph Neural Network (GNN) architectures can further improve segmentation quality and accuracy. In this project, we build upon recent advances in graph-based methods that incorporate superpixel boundary structure recognition. The proposed approach will be evaluated on the benchmark dataset Oxford Pets.
+Image segmentation has recently been extensively explored in deep learning, particularly through graph-based neural networks. While conventional Convolutional Neural Networks (CNNs) provide a strong baseline, studies show that hybrid CNN–Graph Neural Network (GNN) architectures can further improve segmentation quality and accuracy. In this project, we build upon recent advances in graph-based methods that incorporate superpixel boundary structure recognition. The proposed approach will be evaluated on the benchmark dataset Oxford-IIIT Pets.
 
 The project follows a “Bring Your Own Method” approach. We implement and aim to improve upon publicly available architectures, comparing CNN- and GNN-based methods.
 
