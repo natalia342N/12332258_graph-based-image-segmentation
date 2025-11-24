@@ -61,3 +61,33 @@ The motivation for choosing this project did not arise from a random glance at a
 Initially, I assumed that the system might rely on a GPS database storing information about road signs, updating them on the driver’s display as the car moves. However, I soon realized that these systems can update speed limits almost instantly after passing a sign—or even slightly before. This observation raised a deeper question: how does such automation truly work at the fundamental level?
 
 A brief investigation revealed that modern driver-assistance systems make extensive use of deep learning, particularly image segmentation. This discovery inspired the idea for this project: to explore how deep learning techniques enable machines to interpret visual scenes with pixel-level precision—closely resembling human perception on the road.
+
+
+### Assignment 2 Hacking 
+
+## Baseline Experiment (E1) – U-Net, Binary Segmentation
+
+For the initial baseline, a standard U-Net model was trained on the Oxford-IIIT Pet dataset with binary segmentation (pet vs. background).
+
+Configuration:
+
+- Input resolution: 256 × 256
+- Output: 1 channel 
+- Loss: BCEWithLogitsLoss
+- Optimizer: Adam 
+- Epochs: 3
+- Batch size: 4
+- Train/val split: 90% / 10% from the `trainval` split
+- Data augmentation: none
+
+**Results**
+
+| Metric         | Value |
+|----------------|------:|
+| Foreground IoU | 0.619 |
+| mIoU           | 0.655 |
+| Dice           | 0.765 |
+| Pixel accuracy | 0.794 |
+| Val loss       | 0.445 |
+
+These values serve as the **baseline** for further experiments in Assignment 2 (Hacking), where I aim to improve IoU and mIoU by increasing input resolution, adding data augmentation, and tuning training hyperparameters.

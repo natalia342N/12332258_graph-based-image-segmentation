@@ -1,1 +1,12 @@
+# --- Local virtual environments ---
+adl_env/
+venv/
+.env/
+
+# --- Local data / datasets ---
 data/
+datasets/
+
+
+__pycache__/
+*.pyc
