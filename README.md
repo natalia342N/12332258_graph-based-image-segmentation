@@ -90,4 +90,28 @@ Configuration:
 | Pixel accuracy | 0.794 |
 | Val loss       | 0.445 |
 
-These values serve as the **baseline** for further experiments in Assignment 2 (Hacking), where I aim to improve IoU and mIoU by increasing input resolution, adding data augmentation, and tuning training hyperparameters.
+| Metric          | Value |
+|-----------------|------:|
+| Foreground IoU  | 0.457 |
+| mIoU            | 0.531 |
+| Dice Score      | 0.628 |
+| Pixel Accuracy  | 0.704 |
+| Validation Loss | 0.5505 |
+
+These values serve as the **baseline** for further experiments in Assignment 2 (Hacking).
+
+We evaluate our models using two standard segmentation metrics:
+
+1. IoU (Intersection-over-Union) on the foreground class.
+2. Dice Score (F1 for segmentation).
+These two metrics provide a robust measurement of overlap quality and are commonly used in binary semantic segmentation tasks.
+
+
+| Model                | Epochs | Batch size | Augmentation           | IoU_fg | Dice  | Val loss |
+|----------------------|:------:|:----------:|------------------------|:------:|:-----:|:--------:|
+| Baseline UNet        |   3    |     4      | None                   | 0.457  | 0.628 | 0.5505   |
+| Hacked UNet (+aug)   |  10    |     8      | brightness + noise     | 0.662  | 0.797 | 0.3786   |
+
+The hacked model clearly outperforms the baseline on both of our primary
+metrics (foreground IoU and Dice score) and also achieves a lower validation
+loss.
