@@ -82,36 +82,47 @@ Configuration:
 
 **Results**
 
-| Metric         | Value |
-|----------------|------:|
-| Foreground IoU | 0.619 |
-| mIoU           | 0.655 |
-| Dice           | 0.765 |
-| Pixel accuracy | 0.794 |
-| Val loss       | 0.445 |
+## Baseline U-Net Performance
 
 | Metric          | Value |
 |-----------------|------:|
-| Foreground IoU  | 0.457 |
-| mIoU            | 0.531 |
-| Dice Score      | 0.628 |
-| Pixel Accuracy  | 0.704 |
-| Validation Loss | 0.5505 |
+| Foreground IoU  | 0.543 |
+| mIoU            | 0.600 |
+| Dice Score      | 0.704 |
+| Pixel Accuracy  | 0.756 |
+| Validation Loss | 0.5199 |
+
+These values are computed on the **held-out validation split**
+(10% of the `trainval` subset) and correspond to the metrics obtained in the
+**final epoch** of the baseline implementation (`baseline/train_unet.py`).
 
 These values serve as the **baseline** for further experiments in Assignment 2 (Hacking).
 
+## Hacked Experiment (E2) – U-Net with Data Augmentation
 We evaluate our models using two standard segmentation metrics:
 
 1. IoU (Intersection-over-Union) on the foreground class.
 2. Dice Score (F1 for segmentation).
 These two metrics provide a robust measurement of overlap quality and are commonly used in binary semantic segmentation tasks.
+| Model           | Epochs | Batch size | Augmentation     | IoU_fg | Dice  | Val loss |
+|-----------------|:------:|:----------:|------------------|:------:|:-----:|:--------:|
+| Baseline U-Net  |   3    |     4      | None             | 0.543  | 0.704 | 0.5199   |
+| Hacked U-Net    |  10    |     8      | brightness+noise | 0.587  | 0.740 | 0.4323   |
 
-
-| Model                | Epochs | Batch size | Augmentation           | IoU_fg | Dice  | Val loss |
-|----------------------|:------:|:----------:|------------------------|:------:|:-----:|:--------:|
-| Baseline UNet        |   3    |     4      | None                   | 0.457  | 0.628 | 0.5505   |
-| Hacked UNet (+aug)   |  10    |     8      | brightness + noise     | 0.662  | 0.797 | 0.3786   |
 
 The hacked model clearly outperforms the baseline on both of our primary
 metrics (foreground IoU and Dice score) and also achieves a lower validation
 loss.
+
+## Project Timeline Update 1 
+
+| Task                          | Estimated | Actual |
+|------------------------------|-----------|--------|
+| Dataset selection & prep     | 8h        | XXh    |
+| Literature review            | 16h       | XXh    |
+| Model implementation          | 24h       | XXh    |
+| Training & fine-tuning        | 16h       | XXh    |
+| Graph-based method (GCN)      | –         | XXh    |   # optional extra row
+| Application & visualization   | 16h       | XXh    |
+| Report writing                | 24h       | XXh    |
+| Presentation preparation      | 12h       | XXh    |
