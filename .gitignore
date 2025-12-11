@@ -9,4 +9,4 @@ datasets/
 
 
 __pycache__/
-*.pyc
+*.pyc*.pth
