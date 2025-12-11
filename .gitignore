@@ -10,3 +10,4 @@ datasets/
 
 __pycache__/
 *.pyc*.pth
+*.pth

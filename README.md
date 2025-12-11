@@ -114,15 +114,73 @@ The hacked model clearly outperforms the baseline on both of our primary
 metrics (foreground IoU and Dice score) and also achieves a lower validation
 loss.
 
+## Metric Targets vs. Achieved
+
+| Metric | Target | Achieved (E1) | Achieved (E2) | Expected (E3) |
+|--------|:------:|:-------------:|:-------------:|:-------------:|
+| IoU_fg | ≥ 0.55 | 0.543         | **0.587**     | **0.58–0.62** |
+| Dice   | ≥ 0.70 | 0.704         | **0.740**     | **0.74–0.78** |
+| Val Loss | –    | 0.5199        | **0.4323**    | TBD           |
+
+
+
+### Testing Approach
+Following the assignment requirements, we implement small testing cases to:
+
+- Verify Oxford Pets dataset loads with correct shapes and value ranges
+- Confirm image normalization and augmentation produce valid tensors  
+- Test IoU and Dice calculations with known ground truths
+- Ensure U-Net architecture accepts our input dimensions
+
+
+## Reproducing the Experiments (Assignment 2)
+
+All experiments were run in a Python virtual environment (`venv`).
+
+### 1. Clone and set up the environment
+
+```bash
+git clone https://github.com/natalia342N/12332258_graph-based-image-segmentation.git
+cd 12332258_graph-based-image-segmentation
+
+python3 -m venv adl_env
+source adl_env/bin/activate      # on Windows: adl_env\Scripts\activate
+
+pip install -r requirements.txt
+
+cd tests
+python3 test_baseline.py
+python3 test_metrics.py
+cd ..
+
+run the baseline training:
+
+python3 -m baseline.train_unet \
+    --epochs 3 \
+    --batch-size 4 \
+    --img-size 256
+
+run the hacked training with data augmentation:
+
+python3 -m baseline.train_unet_hacked \
+    --epochs 10 \
+    --batch-size 8 \
+    --img-size 256
+
+
+```
+
+Tested with Python 3.11 on macOS. 
+
 ## Project Timeline Update 1 
 
-| Task                          | Estimated | Actual |
-|------------------------------|-----------|--------|
-| Dataset selection & prep     | 8h        | XXh    |
-| Literature review            | 16h       | XXh    |
-| Model implementation          | 24h       | XXh    |
-| Training & fine-tuning        | 16h       | XXh    |
-| Graph-based method (GCN)      | –         | XXh    |   # optional extra row
-| Application & visualization   | 16h       | XXh    |
-| Report writing                | 24h       | XXh    |
-| Presentation preparation      | 12h       | XXh    |
+| Task                        | Estimated | Actual | Status |
+|----------------------------|-----------|--------|--------|
+| Dataset selection & prep   | 8h        | 6h     | Completed |
+| Literature review          | 16h       | 10h    | Completed |
+| Model implementation       | 24h       | 10h    | In progress |
+| Training & fine-tuning     | 16h       | 10h    | In progress |
+| Graph-based method (GCN)   | –         | 2h     | TO DO |
+| Application & visualization| 16h       | 0h     | TO DO |
+| Report writing             | 24h       | 0h     | TO DO |
+| Presentation preparation   | 12h       | 0h     | TO DO |
