@@ -160,7 +160,7 @@ python3 -m baseline.train_unet \
     --batch-size 4 \
     --img-size 256
 
-run training:
+run the hacked training:
 
 python3 -m baseline.train_unet_hacked \
     --epochs 10 \
