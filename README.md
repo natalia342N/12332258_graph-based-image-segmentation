@@ -63,7 +63,7 @@ Initially, I assumed that the system might rely on a GPS database storing inform
 A brief investigation revealed that modern driver-assistance systems make extensive use of deep learning, particularly image segmentation. This discovery inspired the idea for this project: to explore how deep learning techniques enable machines to interpret visual scenes with pixel-level precision—closely resembling human perception on the road.
 
 
-### Assignment 2 Hacking 
+# Assignment 2 Hacking 
 
 ## Baseline Experiment (E1) – U-Net, Binary Segmentation
 
@@ -102,12 +102,12 @@ These values serve as the **baseline** for further experiments in Assignment 2 (
 We evaluate our models using two standard segmentation metrics:
 
 1. IoU (Intersection-over-Union) on the foreground class.
-2. Dice Score (F1 for segmentation).
-These two metrics provide a robust measurement of overlap quality and are commonly used in binary semantic segmentation tasks.
-| Model           | Epochs | Batch size | Augmentation     | IoU_fg | Dice  | Val loss |
-|-----------------|:------:|:----------:|------------------|:------:|:-----:|:--------:|
-| Baseline U-Net  |   3    |     4      | None             | 0.543  | 0.704 | 0.5199   |
-| Hacked U-Net    |  10    |     8      | brightness+noise | 0.587  | 0.740 | 0.4323   |
+2. Dice Score.
+
+| Model            | Epochs | Batch Size | Augmentation        | IoU_fg | Dice  | Val Loss |
+|------------------|:------:|:----------:|---------------------|:------:|:-----:|:--------:|
+| Baseline U-Net   |   3    |     4      | None                | 0.543  | 0.704 | 0.5199   |
+| Hacked U-Net     |  10    |     8      | Brightness + Noise  | 0.587  | 0.740 | 0.4323   |
 
 
 The hacked model clearly outperforms the baseline on both of our primary
@@ -133,7 +133,7 @@ Following the assignment requirements, we implement small testing cases to:
 - Ensure U-Net architecture accepts our input dimensions
 
 
-## Reproducing the Experiments (Assignment 2)
+## Reproducing the Experiments (of Assignment 2)
 
 All experiments were run in a Python virtual environment (`venv`).
 
@@ -144,7 +144,7 @@ git clone https://github.com/natalia342N/12332258_graph-based-image-segmentation
 cd 12332258_graph-based-image-segmentation
 
 python3 -m venv adl_env
-source adl_env/bin/activate      # on Windows: adl_env\Scripts\activate
+source adl_env/bin/activate 
 
 pip install -r requirements.txt
 
@@ -160,7 +160,7 @@ python3 -m baseline.train_unet \
     --batch-size 4 \
     --img-size 256
 
-run the hacked training with data augmentation:
+run training:
 
 python3 -m baseline.train_unet_hacked \
     --epochs 10 \
