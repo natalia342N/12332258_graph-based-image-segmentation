@@ -56,8 +56,8 @@ def build_superpixel_graph(img_np: np.ndarray, mask_bin: np.ndarray):
         node_label = 1 if m >= 0.5 else 0
         labels.append(node_label)
 
-    feats = np.stack(feats, axis=0)   # (num_sp, 4)
-    labels = np.array(labels, dtype=np.int64)  # (num_sp,)
+    feats = np.stack(feats, axis=0)  
+    labels = np.array(labels, dtype=np.int64)  
     edges = set()
 
     for y in range(H - 1):
@@ -88,7 +88,6 @@ def build_superpixel_graph(img_np: np.ndarray, mask_bin: np.ndarray):
 
 
 def main():
-    # Assume we run from repo root: 12332258_graph-based-image-segmentation
     root = Path(".").resolve()
     out_dir = root / "data" / "pets_graphs"
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -116,6 +115,9 @@ def main():
     train_sp_maps = []
     val_sp_maps = []
 
+    train_indices = []
+    val_indices = []    
+
     for idx in tqdm(range(n_total), desc="Building superpixel graphs for Pets"):
         img, mask = dataset[idx] 
         img = img.resize((IMAGE_SIZE, IMAGE_SIZE), resample=Image.BILINEAR)
@@ -123,16 +125,28 @@ def main():
 
         img_np = np.array(img, dtype=np.uint8)     
         mask_np = np.array(mask, dtype=np.uint8)     
-        mask_bin = np.isin(mask_np, [1, 3]).astype(np.uint8)
+        # mask_bin = np.isin(mask_np, [1, 3]).astype(np.uint8)
+        mask_bin = np.isin(mask_np, [2, 3]).astype(np.uint8)   # foreground + border
+
 
         g, sp_map = build_superpixel_graph(img_np, mask_bin)
+
+        # if idx in train_idx:
+        #     train_graphs.append(g)
+        #     train_sp_maps.append(sp_map.astype(np.int32))
+        # else:
+        #     val_graphs.append(g)
+        #     val_sp_maps.append(sp_map.astype(np.int32))
 
         if idx in train_idx:
             train_graphs.append(g)
             train_sp_maps.append(sp_map.astype(np.int32))
+            train_indices.append(idx)  # NEW
         else:
             val_graphs.append(g)
             val_sp_maps.append(sp_map.astype(np.int32))
+            val_indices.append(idx)    # NEW
+
 
     train_bin_path = out_dir / "pets_train.bin"
     val_bin_path = out_dir / "pets_val.bin"
@@ -149,7 +163,8 @@ def main():
     with open(train_pkl_path, "wb") as f:
         pickle.dump(
             {
-                "superpixel_maps": train_sp_maps, 
+                "superpixel_maps": train_sp_maps,
+                "indices": train_indices,   # NEW
             },
             f,
         )
@@ -157,9 +172,15 @@ def main():
         pickle.dump(
             {
                 "superpixel_maps": val_sp_maps,
+                "indices": val_indices,     # NEW
             },
             f,
         )
+
+
+    assert len(train_graphs) == len(train_sp_maps) == len(train_indices)
+    assert len(val_graphs) == len(val_sp_maps) == len(val_indices)
+
 
     print("Done. Graph data stored in data/pets_graphs/.")
 

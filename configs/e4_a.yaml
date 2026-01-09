@@ -1,0 +1,13 @@
+experiment: E4-A
+seed: 42
+epochs: 30
+batch_size: 8
+learning_rate: 0.001
+weight_decay: 0.0
+hidden_feats: 64
+num_layers: 2
+graphs_dir: data/pets_graphs_unetfeat
+early_stopping:
+  enabled: true
+  patience: 5
+  min_delta: 0.0005

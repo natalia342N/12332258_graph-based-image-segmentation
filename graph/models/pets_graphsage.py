@@ -6,7 +6,7 @@ import dgl.nn as dglnn
 
 
 class PetsGraphSAGE(nn.Module):
-    def __init__(self, in_feats: int = 4, hidden_feats: int = 64, num_layers: int = 2, num_classes: int = 2, dropout: float = 0.2):
+    def __init__(self, in_feats: int = 6, hidden_feats: int = 64, num_layers: int = 2, num_classes: int = 2, dropout: float = 0.2):
         super().__init__()
 
         self.layers = nn.ModuleList()

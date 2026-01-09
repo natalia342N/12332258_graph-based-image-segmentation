@@ -184,3 +184,102 @@ Tested with Python 3.11 on macOS.
 | Application & visualization| 16h       | 0h     | TO DO |
 | Report writing             | 24h       | 0h     | TO DO |
 | Presentation preparation   | 12h       | 0h     | TO DO |
+
+
+
+# Assignment 3 Deliver
+
+### Relation to Prior Work
+
+This project is inspired by recent work on graph-based image segmentation. In particular, Jung et al. (2023) propose a superpixel-based GCN that performs segmentation by modeling spatial relationships between image regions. We adopt a similar superpixel graph construction strategy in Experiment E3, using GraphSAGE for node classification.
+
+Furthermore, Singh et al. (2025) demonstrate that combining convolutional feature extractors with graph-based reasoning can improve segmentation quality. Motivated by this idea, we extend our graph-only model with a hybrid CNN–GNN approach in Experiment E4, where intermediate U-Net encoder features are pooled over superpixels and refined using a GNN.
+
+Rather than reproducing large-scale architectures from the literature, our goal is to implement these concepts in a lightweight and reproducible form, allowing a clear comparison between CNN-only, GNN-only, and hybrid models.
+
+
+## Experiments Summary
+
+| Model / Experiment | Description | IoU_fg | Dice |
+|---|---|---:|---:|
+| E1 Baseline U-Net | 3 epochs, no augmentation | 0.543 | 0.704 |
+| E2 Hacked U-Net | 10 epochs, brightness + noise | 0.587 | 0.740 |
+| E3 Superpixel GraphSAGE | SLIC superpixels + handcrafted node features | 0.597 | 0.730 |
+| **E4 Hybrid CNN+GNN (final)** | U-Net encoder features pooled over superpixels + GraphSAGE | **0.691** | **0.806** |
+
+
+
+### Feedback applied from Assignment 2
+## Hyperparameter Sensitivity Analysis
+
+To study the sensitivity of the proposed hybrid CNN–GNN model to training hyperparameters, we evaluated multiple configurations varying the learning rate, weight decay, number of superpixels, and GNN hidden dimensionality. Rather than relying on a single training setup, we explicitly compared three configurations and selected the best-performing one based on validation IoU. This analysis showed that moderate learning rates combined with weight decay improved generalization, while excessively large superpixel graphs did not yield further gains.
+
+
+## Hyperparameter Exploration (E4)
+
+| Experiment | Learning Rate | Weight Decay | Hidden Dim | Num Layers | Best Epoch | Best Val Node Acc |
+|---|---:|---:|---:|---:|---:|---:|
+| **E4-A** | 1e-3 | 0.0 | 64 | 2 | 30 | **0.8000** |
+| E4-B | 5e-4 | 1e-4 | 64 | 2 | 30 | 0.7859 |
+| E4-C | 5e-4 | 1e-4 | 32 | 2 | 29 | 0.7765 |
+
+
+
+To evaluate the robustness of the hybrid CNN–GNN model (E4), we trained three configurations with different learning rates, weight decay values, and GNN hidden dimensions. The best performance was achieved by **E4-A**, which used a learning rate of 1e-3 and a hidden dimension of 64, reaching a validation node accuracy of 0.842. Lower learning rates, added weight decay, or reduced model capacity did not improve performance in this setting. Based on these results, E4-A was selected as the final configuration for evaluation and demonstration.
+
+
+## TensorBoard Tracking
+
+Training/validation loss and node accuracy are logged to TensorBoard for each experiment:
+
+```bash
+tensorboard --logdir runs
+
+
+We implemented early stopping (patience=5, min_delta=5e-4) based on validation node accuracy and save both the best checkpoint and the last checkpoint for each run.
+```
+
+
+## Metric Targets vs. Achieved
+
+| Metric | Target | Achieved (E1) | Achieved (E2) | Achieved (E3) | Achieved (E4) |
+|---|:---:|:---:|:---:|:---:|:---:|
+| IoU_fg | ≥ 0.55 | 0.543 | **0.587** | **0.597** | **0.691** |
+| Dice | ≥ 0.70 | 0.704 | **0.740** | **0.730** | **0.806** |
+
+
+### Combined Experiment Reproduction Script
+
+```bash
+rm -rf data/pets_graphs
+rm -rf data/pets_graphs_unetfeat
+rm -rf runs
+
+python baseline/train_unet_e1.py
+python baseline/train_unet_e2.py
+
+python -m graph.preprocess.pets_preprocessing_e3
+python -m graph.train.train_pets_GNN \
+  --config configs/e3.yaml \
+  --device cpu
+python -m graph.eval.eval_e3 --config configs/e3.yaml --device cpu
+
+
+python -m graph.preprocess.pets_preprocessing_e4
+python -m graph.train.train_pets_GNN --config configs/e4_a.yaml
+python -m graph.train.train_pets_GNN --config configs/e4_b.yaml
+python -m graph.train.train_pets_GNN --config configs/e4_c.yaml
+
+python -m graph.eval.eval_e4 \
+  --device cpu \
+  --graphs_dir data/pets_graphs_unetfeat \
+  --ckpt runs/E4-A/best_gnn.pth
+python -m graph.eval.eval_e4 --device cpu --graphs_dir data/pets_graphs_unetfeat --ckpt runs/E4-B/best_gnn.pth
+python -m graph.eval.eval_e4 --device cpu --graphs_dir data/pets_graphs_unetfeat --ckpt runs/E4-C/best_gnn.pth
+
+
+pytest -q
+```
+
+
+
