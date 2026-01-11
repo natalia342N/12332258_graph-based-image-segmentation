@@ -279,6 +279,9 @@ python -m graph.eval.eval_e4 --device cpu --graphs_dir data/pets_graphs_unetfeat
 
 
 pytest -q
+
+python -m graph.demo.app_gradio
+
 ```
 
 
